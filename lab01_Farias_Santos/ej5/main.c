@@ -1,12 +1,15 @@
+/* First, the standard lib includes, alphabetically ordered */
 #include <assert.h>
-#include "mybool.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "array_helpers.h"
+#include "array_helpers.h" /*añadimos la libreria "array_helpers para poder usar las funciones array_from_file y array_dump"*/
 
+/* Maximum allowed length of the array */
 #define MAX_SIZE 100000
 
 void print_help(char *program_name) {
+    /* Print the usage help of this program. */
     printf("Usage: %s <input file path>\n\n"
            "Loads an array given in a file in disk and prints it on the screen."
            "\n\n"
@@ -23,8 +26,11 @@ void print_help(char *program_name) {
 }
 
 char *parse_filepath(int argc, char *argv[]) {
+    /* Parse the filepath given by command line argument. */
     char *result = NULL;
-    mybool valid_args_count = (argc == 2);
+    // Program takes exactly two arguments
+    // (the program's name itself and the input-filepath)
+    bool valid_args_count = (argc == 2);
 
     if (!valid_args_count) {
         print_help(argv[0]);
@@ -39,23 +45,25 @@ char *parse_filepath(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
 
+    /* parse the filepath given in command line arguments */
     filepath = parse_filepath(argc, argv);
     
+    /* create an array of MAX_SIZE elements */
     int array[MAX_SIZE];
     
+    /* parse the file to fill the array and obtain the actual length */
     unsigned int length = array_from_file(array, MAX_SIZE, filepath);
     
+    /*dumping the array*/
     array_dump(array, length);
+
+    bool sort = array_is_sorted(array, length);
+
+    if (sort == true){
+        printf("El arreglo esta ordenado\n");
+    } else {
+        printf("El arreglo esta desordenado\n");
+    }
     
-
-    mybool resultado = array_is_sorted(array,length);
-
-    if (resultado == false){
-        printf("El Arreglo no Esta Ordenado\n");
-    }
-    else{
-        printf("El Arreglo Esta Ordenado\n");
-    }
-
     return EXIT_SUCCESS;
 }

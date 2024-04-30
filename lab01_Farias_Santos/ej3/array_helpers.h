@@ -7,4 +7,4 @@
 
 unsigned int array_from_file(int array[], unsigned int max_size, const char *filepath);
 void array_dump(int a[], unsigned int length);
-//aca declaramos todas las funciones que usaremos en main y difiniremos en array_helper.c
+/*En los archivos .h especificamos las funciones para despues en los .c implementarla*/

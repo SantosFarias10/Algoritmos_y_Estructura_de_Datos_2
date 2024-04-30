@@ -11,4 +11,4 @@ void array_dump(int a[], unsigned int length);
 
 mybool array_is_sorted(int a[], unsigned int length);
 
-#endif /* ARRAY_HELPERS_H */
+#endif ARRAY_HELPERS_H

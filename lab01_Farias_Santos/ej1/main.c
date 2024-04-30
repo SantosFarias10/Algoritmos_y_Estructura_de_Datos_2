@@ -1,11 +1,14 @@
+/* First, the standard lib includes, alphabetically ordered */
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Maximum allowed length of the array */
 #define MAX_SIZE 100000
 
 void print_help(char *program_name) {
+    /* Print the usage help of this program. */
     printf("Usage: %s <input file path>\n\n"
            "Loads an array given in a file in disk and prints it on the screen."
            "\n\n"
@@ -22,7 +25,10 @@ void print_help(char *program_name) {
 }
 
 char *parse_filepath(int argc, char *argv[]) {
+    /* Parse the filepath given by command line argument. */
     char *result = NULL;
+    // Program takes exactly two arguments
+    // (the program's name itself and the input-filepath)
     bool valid_args_count = (argc == 2);
 
     if (!valid_args_count) {
@@ -36,50 +42,52 @@ char *parse_filepath(int argc, char *argv[]) {
 }
 
 unsigned int array_from_file(int array[], unsigned int max_size, const char *filepath) {
-    
-    unsigned int size;
-    
-    FILE *file = fopen(filepath, "r"); //definimos file y con fopen le damos el valor de la direccion y le decimos que solo lea 
+    unsigned size;
 
-    fscanf(file, "%u", &size); //escaneamos el tamaño del array
+    FILE *file = fopen(filepath, "r"); /*Definimos el file y con la funcion fopen le damos como argumento el filepath (la direccion del archivo) y como segundo argumento le pedimos que solo lea lo que contiene esa direccion*/
 
-    if (size > max_size){ //verificamos que el tamaño no supere el max_size
-        printf("¡ERROR! El Tamaño es Superior al Permitido (100000)\n");
-        fclose(file); //cerramos el file
+    fscanf(file, "%u", &size); /*con la funcion fscanf escaneamos el tamaño del array de la direccion*/
+
+    if (size > max_size){ /*si el tamaño escaneado es superior al perimitido (100000) entonces imprimimos un mensaje de error, cerramos el file y returnamos un unsigned 0*/
+        printf("¡¡¡ERROR!!! El tamaño es superior al permitido\n");
+        fclose(file);
         return 0u;
     }
 
-    for (unsigned int i = 0; i < size; i++) //escanamos los elementos del array
-    {
-        fscanf(file, "%d", &array[i]);
+    for (unsigned int i = 0; i < size; i++){ /*con el for vamos escaneando cada elemento del array con la funcion fscanf que esta en la direccion*/
+        fscanf(file, "%d", array[i]);
     }
     
-    printf("Datos Recolectados Correctamente\n"); //mostramos que los datos se guardaron con exito
+    printf("Datos Recolectados Correctamente\n"); /*imprimimos un mensaje para verificar que hallamos leido bien cada elemento de la direccion*/
 
     return size;
 }
 
-void array_dump(int a[], unsigned int length) { //imprimimos el array
+void array_dump(int a[], unsigned int length) { /*imprimimos el array*/
     printf("[");
-    for (unsigned int i = 0; i < length; i++) {
-        if (i>0) {
-            printf(",");
+    for (unsigned int i = 0; i < length; i++){
+        if (i>0){
+            printf(", ");
         }
         printf("%d", a[i]);
     }
-    printf("]\n");
+    printf("]");
 }
 
 
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
 
+    /* parse the filepath given in command line arguments */
     filepath = parse_filepath(argc, argv);
     
+    /* create an array of MAX_SIZE elements */
     int array[MAX_SIZE];
     
+    /* parse the file to fill the array and obtain the actual length */
     unsigned int length = array_from_file(array, MAX_SIZE, filepath);
     
+    /*dumping the array*/
     array_dump(array, length);
     
     return EXIT_SUCCESS;

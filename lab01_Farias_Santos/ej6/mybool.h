@@ -1,4 +1,4 @@
-#ifndef MYBOOL_H 
+#ifndef MYBOOL_H
 #define MYBOOL_H
 
 #define true 1
@@ -6,4 +6,4 @@
 
 typedef int mybool;
 
-#endif /* MYBOOL_H */
+#endif MYBOOL_H
