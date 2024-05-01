@@ -32,7 +32,7 @@ static unsigned int partition(int a[], unsigned int izq, unsigned int der) {
 }
 
 static void quick_sort_rec(int a[], unsigned int izq, unsigned int der) {
-    unsigned int pivot = partition(a, izq, der);
+    unsigned int pivot = partition(a, izq, der); /*partition esta especificado en sort_helpers y implementado en el sort_helpers.o*/
 
     if (izq < pivot){
         quick_sort_rec(a, izq, pivot-1);

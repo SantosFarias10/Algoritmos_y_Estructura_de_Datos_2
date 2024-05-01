@@ -28,3 +28,4 @@ bool fstring_less_eq(fixstring s1, fixstring s2);
 
 
 #endif
+
