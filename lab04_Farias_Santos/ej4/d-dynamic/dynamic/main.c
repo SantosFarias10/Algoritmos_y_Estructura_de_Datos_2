@@ -55,9 +55,7 @@ int main(int argc, char *argv[]) {
     /*dumping the array*/
     array_dump(array, length);
     
-    // 
-    // COMPLETAR: Liberar la memoria usada por <array>
-    //
+    free(array); /*liberamos la memoria*/
     
     return EXIT_SUCCESS;
 }
