@@ -14,7 +14,7 @@ pair_t pair_new(int x, int y);
  *
  * p = pair_new(x, y);
  *
- * POS: {p --> (x, y)}
+ * POS: {p --> (x, y)} 
  */
 
 int pair_first(pair_t p);

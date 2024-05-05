@@ -25,3 +25,4 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
+/*La diferencia entra la especificacion del ejercicio anterior y esta, es que en esta es mas abstracta, ya que en vez de implementar con el tipo INT, se usa un nuevo tipo que es enum*/

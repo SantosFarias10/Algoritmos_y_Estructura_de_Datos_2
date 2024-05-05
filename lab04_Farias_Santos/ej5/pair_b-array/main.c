@@ -4,9 +4,8 @@
 
 static
 void show_pair(pair_t p) {
-    printf("(%d, %d)\n", p.fst, p.snd);
+    printf("(%d, %d)\n", p.values[0], p.values[1]);
 }
-
 
 int main(void) {
     pair_t p, q;
@@ -25,3 +24,7 @@ int main(void) {
     q = pair_destroy(q);
     return EXIT_SUCCESS;
 }
+
+/*1) Falla ya que show_pair estaba definido para el TAD del ejercicio anterior, habria que cambiarlo por la nueva definicion*/
+
+/*3) No se logra el encapsulamiento ya que se deben utilizar los indices del arreglo para acceder a ellos*/

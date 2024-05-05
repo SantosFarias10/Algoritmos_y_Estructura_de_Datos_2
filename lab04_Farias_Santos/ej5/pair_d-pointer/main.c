@@ -4,9 +4,9 @@
 
 static
 void show_pair(pair_t p) {
-    printf("(%d, %d)\n", p.fst, p.snd);
+    printf("(%d, %d)\n", pair_first(p), pair_second(p)); /*fallaba ya que accediamos a los componentes de p a traves del puntero
+                                                            lo cambiamos por las funciones que nos devuelven el primer y segundo elemento*/
 }
-
 
 int main(void) {
     pair_t p, q;
@@ -21,7 +21,9 @@ int main(void) {
     printf("q = ");
     show_pair(q);
     // Se destruyen p y q
-    p = pair_destroy(p); /*¿Se libera espacio de memoria con mi implementacion de pair_destroy?*/
+    p = pair_destroy(p);
     q = pair_destroy(q);
     return EXIT_SUCCESS;
 }
+
+/*Si logra el encapsulamiento*/
