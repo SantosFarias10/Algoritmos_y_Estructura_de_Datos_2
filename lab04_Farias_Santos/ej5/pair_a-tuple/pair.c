@@ -17,17 +17,17 @@ pair_t pair_new(int x, int y){
 }
 
 int pair_first(pair_t p){
-    /*¿Caul seria la pre/postCondicion?*/
+    assert(sizeof(p) == sizeof(pair_t)); /*si tiene la misma cantidad de bytes entonces eso quiere decir que son iguales*/
     return p.fst;
 }
 
 int pair_second(pair_t p){
-    /*¿Caul seria la pre/postCondicion?*/
+    assert(sizeof(p) == sizeof(pair_t));
     return p.snd;
 }
 
 pair_t pair_swapped(pair_t p){
-    /*¿PreCondicion?*/
+    assert(sizeof(p) == sizeof(pair_t));
     pair_t q;
     q = pair_new(p.snd, p.fst); /*definimos un nuevo pair pero con los valores cambiados*/
     assert(pair_first(q) == pair_second(p) && pair_second(q) == pair_first(p));

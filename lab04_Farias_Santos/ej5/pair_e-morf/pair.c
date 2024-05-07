@@ -21,17 +21,17 @@ pair_t pair_new(elem x, elem y){
 }
 
 elem pair_first(pair_t p) {
-    /*¿?*/
+    assert(sizeof(p) == sizeof(pair_t));
     return p->fst;
 }
 
 elem pair_second(pair_t p) {
-    /*¿?*/
+    assert(sizeof(p) == sizeof(pair_t));
     return p->snd;
 }
 
 pair_t pair_swapped(pair_t p) {
-    /*¿?*/
+    assert(sizeof(p) == sizeof(pair_t));
     
     pair_t q = pair_new(p->snd, p->fst);
     

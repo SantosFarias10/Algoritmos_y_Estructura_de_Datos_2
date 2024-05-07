@@ -24,16 +24,17 @@ pair_t pair_new(int x, int y){
 }
 
 int pair_first(pair_t p){
-    /*¿?*/
+    assert(sizeof(p) == sizeof(pair_t));
     return p->fst;
 }
 
 int pair_second(pair_t p){
-    /*¿?*/
+    assert(sizeof(p) == sizeof(pair_t));
     return p->snd;
 }
 
 pair_t pair_swapped(pair_t p){
+    assert(sizeof(p) == sizeof(pair_t));
 
     pair_t q;
     q = pair_new(p->snd,p->fst);
