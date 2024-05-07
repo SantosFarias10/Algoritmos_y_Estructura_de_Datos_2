@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "counter.h"
 
@@ -8,37 +9,31 @@ struct _counter {
 };
 
 counter counter_init(void) {
-/*
-    Needs implementation.
-*/
+    counter c = malloc(sizeof(struct _counter)); /*guardamos un lugar de memoria para la estuctura _counter*/
+    c->count = 0u; /*c apunta a count e inicilizamos en 0u (porque es un unsigned int)*/
+    return c; 
 }
 
 void counter_inc(counter c) {
-/*
-    Needs implementation.
-*/
+    c->count++;
 }
 
 bool counter_is_init(counter c) {
-/*
-    Needs implementation.
-*/
+    return c->count == 0;
 }
 
 void counter_dec(counter c) {
-/*
-    Needs implementation.
-*/
+    assert(!counter_is_init(c));
+    c->count--;
 }
 
 counter counter_copy(counter c) {
-/*
-    Needs implementation.
-*/
+    counter p = malloc(sizeof(struct _counter));
+    p->count = c->count;
+    return p;
 }
 
 void counter_destroy(counter c) {
-/*
-   Needs implementation.
-*/
+    free(c);
+    c = NULL;
 }
