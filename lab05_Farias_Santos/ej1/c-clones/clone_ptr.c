@@ -23,7 +23,7 @@ char *string_clone(const char *str, size_t length) {
 }
 
 int main(void) {
-    char original[]=""
+    char *original=""
          "______ time ago in a galaxy far, far away...\n\n\n"
          ANSI_BRGOLD
          "         _______..___________.     ___      .______             \n"
@@ -62,7 +62,7 @@ int main(void) {
          "                Jedi....\n" ANSI_WHITE;
     char *copy=NULL;
 
-    copy = string_clone(original, sizeof(original)/sizeof(*original));
+    copy = string_clone(original, 1812);
     printf("Original:\n" ANSI_CYAN
             " %s\n", original);
     copy[0] = 'A';
@@ -79,10 +79,8 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
-/* 
- * Char clone[MAX_LENGTH] es una variable local definida dentro dela funcion string_clone => Esto quiere decir que su memoria se asigna en stack y se libera automaticamente al terminar la funcion.
- * Como no se asigna en ningun momento malloc, calloc, etc no existe ningun registro de memoria dinamica.
- * Entonces como return quiere devolver output, devuelve un puntero a una variable local, clon, aqui se genera un problema ya que la memoria de clon sera liberada automaticamente al finalizar string_clone, dejando al puntero output apuntando a un lugar de memoria no valida
- 
- * El valor que toma el parámetro "length" cuando se llama a string_clone() es de 1812
+/*
+
+ * El codigo no funciona al cambiar el tipo de original ya que en "copy = string_clone(original, MAX_LENGTH);" el length es distinto, osea la cantidad de memoria que ocupa es distinto
+
 */
