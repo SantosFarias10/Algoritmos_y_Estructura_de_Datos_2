@@ -6,12 +6,20 @@
 #define MAX_LENGTH 1820
 
 char *string_clone(const char *str) {
-    char *clone=NULL;
-    /*
-     * COMPLETAR
-     *
-     */
-    return output;
+    size_t tam = strlen(str) + 1; /*+1 ya que no incluye el '\0'*/
+    char *clone = malloc(tam);
+
+    if (clone == NULL){
+        printf("ERROR\n");
+        return NULL;
+    }
+
+    clone = strcpy(clone, str);
+    /* 
+    * strcpy() es una función que nos permite copiar en una cadena el contenido de otra, que toma como parametros la cadena a la cual queremos copiar y donde la vamos a copiar
+    * strlen() devuelve la longitud de serie
+    */
+    return clone;
 }
 
 
@@ -66,6 +74,8 @@ int main(void) {
     copy[5] = 'g';
     printf("Copia   :\n" ANSI_CYAN
            " %s\n", copy);
+
+    free(copy);
 
     return EXIT_SUCCESS;
 }
