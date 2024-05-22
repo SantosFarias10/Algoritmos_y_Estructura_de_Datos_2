@@ -42,26 +42,45 @@ char *parse_filepath(int argc, char *argv[]) {
 }
 
 int main(int argc, char *argv[]) {
-  char *filepath = NULL;
+    char *filepath = NULL;
 
-  /* parse the filepath given in command line arguments */
-  filepath = parse_filepath(argc, argv);
+    /* parse the filepath given in command line arguments */
+    filepath = parse_filepath(argc, argv);
 
-  /* create an array of MAX_SIZE elements */
-  int array[MAX_SIZE];
+    /* create an array of MAX_SIZE elements */
+    int array[MAX_SIZE];
 
-  /* parse the file to fill the array and obtain the actual length */
-  unsigned int length = array_from_file(array, MAX_SIZE, filepath);
-  printf("Original: ");
-  array_dump(array, length);
+    /* parse the file to fill the array and obtain the actual length */
+    unsigned int length = array_from_file(array, MAX_SIZE, filepath);
+    printf("Original: ");
+    array_dump(array, length);
 
-  int *new_array=NULL;
-  /**
-  *
-  *  --- COMPLETAR ----
-  *
-  */
-  printf("Reversed: ");
-  array_dump(new_array, length);
-  return (EXIT_SUCCESS);
+    int *new_array=NULL;
+    /*reservamos la memoria*/
+    new_array = malloc(sizeof(stack_elem) * length);
+
+    /*con stack_empty creamos una pila*/
+    stack pila = stack_empty();
+
+    /*cargamos los elementos de array en la pila*/
+    for (unsigned int i = 0; i < length; i++){
+        pila = stack_push(pila, array[i]);
+    }
+
+    /*y ahora cargamos los elementos de la pila en el arreglo*/
+    for (unsigned int i = 0; i < length; i++){
+        new_array[i] = stack_top(pila);
+        pila = stack_pop(pila);
+    }
+
+    /*destruimos la pila*/
+    stack_destroy(pila);
+    
+    printf("Reversed: \n");
+    array_dump(new_array, length);
+    
+    /*liberamos la memoria*/
+    free(new_array);
+
+    return (EXIT_SUCCESS);
 }
