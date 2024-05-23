@@ -22,31 +22,56 @@ struct _hanoi {
     stack target;
     unsigned int disk_count;
 };
-
+/*Iniciliza la torre de hanoi*/
 hanoi_t hanoi_init(unsigned int disk_count) {
     hanoi_t hanoi = malloc(sizeof(struct _hanoi));
+
     assert(hanoi != NULL);
+    
     hanoi->aux = stack_empty();
     hanoi->target = NULL;
     hanoi->disk_count = disk_count;
+    
     for (unsigned int i = disk_count; i > 0; --i) {
         hanoi->source = stack_push(hanoi->source, i);
     }
+    
     return hanoi;
 }
+/*Retorna la source tower (contiene disk_count que estan ordenas), middle tower (vacia) y target tower (vacia)*/
 
+/*Mueve todos los discos de source tower a target tower, siguiendo las restricciones de movimiento del juego, tambien imprime las 3 torres despues de cada movimiento, (notar que es recursivo)*/
 void hanoi_solve(hanoi_t hanoi) {
     move(hanoi->disk_count, hanoi, &hanoi->source,
         &hanoi->target, &hanoi->aux);
 }
 
+/*Imprime el estado actual de las torres*/
 void hanoi_print(hanoi_t hanoi) {
     print(hanoi->source, hanoi->aux, hanoi->target, hanoi->disk_count);
 }
 
+/*Se destruyen las torres, es decir se libera toda la memoria*/
 hanoi_t hanoi_destroy(hanoi_t hanoi) {
     assert(hanoi != NULL);
+
+    /*
+     * En la funcion que venia implementada:
+        hanoi_t hanoi_destroy(hanoi_t hanoi) {
+            assert(hanoi != NULL);
+            free(hanoi);
+            return NULL;
+        }
+     
+     * hay perdidas de memoria ya que la funcion simplemente libera la memoria asignada a la estructura hanoi_t, pero no libera la memoria asignada en la pila, osea source, aux y target,      
+    */
+
+    hanoi->source = stack_destroy(hanoi->source);
+    hanoi->aux = stack_destroy(hanoi->aux);
+    hanoi->target = stack_destroy(hanoi->target);
+
     free(hanoi);
+
     return NULL;
 }
 
@@ -58,10 +83,13 @@ static void move(unsigned int current,
     ) {
     if (current > 0) {
         move(current - 1, hanoi, source_ptr, aux_ptr, target_ptr);
+
         stack_elem elem = stack_top(*source_ptr);
         *source_ptr = stack_pop(*source_ptr);
         *target_ptr = stack_push(*target_ptr, elem);
+        
         hanoi_print(hanoi);
+
         move(current - 1, hanoi, aux_ptr, target_ptr, source_ptr);
     }
 }
@@ -69,19 +97,25 @@ static void move(unsigned int current,
 
 static char *create_disk_str(int size) {
     char *result = NULL;
+    
     if (size == 1) {
         const unsigned int tam = 3;
+
         result = calloc(tam, sizeof(char));
+        
         strcpy(result, "/\\");
     } else {
         const char *prefix = "/";
         char *rec = create_disk_str(size - 1);
         const char *suffix = "\\";
         const unsigned int tam = 3 + strlen(rec);
+        
         result = calloc(tam, sizeof(char));
+        
         strcat(result, prefix);
         strcat(result, rec);
         strcat(result, suffix);
+        
         free(rec);
     }
     return result;
