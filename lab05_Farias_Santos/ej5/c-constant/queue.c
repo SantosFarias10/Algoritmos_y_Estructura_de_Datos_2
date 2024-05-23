@@ -1,13 +1,14 @@
-#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #include "queue.h"
 
 struct s_queue {
+    unsigned int size;
     struct s_node *first;
-    unsigned int tam;
+    struct s_node *last;
 };
 
 struct s_node {
@@ -15,36 +16,31 @@ struct s_node {
     struct s_node *next;
 };
 
-static struct s_node *
-create_node(queue_elem e) {
-    struct s_node *new_node=malloc(sizeof(struct s_node));
-    assert(new_node!=NULL);
+static struct s_node *create_node(queue_elem e) {
+    struct s_node *new_node = malloc(sizeof(struct s_node));
+    assert(new_node != NULL);
     new_node->elem = e;
     new_node->next = NULL;
     return new_node;
 }
 
-static struct s_node *
-destroy_node(struct s_node *node) {
-    node->next=NULL;
+static struct s_node *destroy_node(struct s_node *node) {
+    node->next = NULL;
     free(node);
-    node=NULL;
+    node = NULL;
     return node;
 }
 
-
-static bool
-invrep(queue q) {
+static bool invrep(queue q) {
     return q != NULL;
 }
 
 queue queue_empty(void) {
     queue q = NULL;
     q = malloc(sizeof(struct s_queue));
-
-    q->tam = 0u;
+    q->size = 0u;
     q->first = NULL;
-
+    q->last = NULL;
     assert(invrep(q) && queue_is_empty(q));
     return q;
 }
@@ -54,18 +50,12 @@ queue queue_enqueue(queue q, queue_elem e) {
     struct s_node *new_node = create_node(e);
     if (q->first == NULL) {
         q->first = new_node;
+        q->last = new_node;
     } else {
-        struct s_node *aux = q->first;
-        while (aux->next != NULL){
-            aux = aux->next;
-        }
-
-        aux->next = new_node;
-    
+        q->last->next = new_node;
+        q->last = new_node;
     }
-
-    q->tam = q->tam + 1u;
-
+    q->size++;
     assert(invrep(q) && !queue_is_empty(q));
     return q;
 }
@@ -75,21 +65,19 @@ bool queue_is_empty(queue q) {
     return q->first == NULL;
 }
 
+unsigned int queue_size(queue q) {
+    assert(invrep(q));
+    return q->size;
+}
+
 queue_elem queue_first(queue q) {
     assert(invrep(q) && !queue_is_empty(q));
     return q->first->elem;
 }
-unsigned int queue_size(queue q) {
-    assert(invrep(q));
-
-    unsigned tam = q->tam;
-
-    return tam;
-}
 
 queue queue_dequeue(queue q) {
     assert(invrep(q) && !queue_is_empty(q));
-    struct s_node * killme=q->first;
+    struct s_node *killme = q->first;
     q->first = q->first->next;
     killme = destroy_node(killme);
     assert(invrep(q));
@@ -97,15 +85,36 @@ queue queue_dequeue(queue q) {
 
 }
 
+queue queue_disscard(queue q, unsigned int n) {
+    assert(invrep(q) && n < queue_size(q));
+    struct s_node *n_aux = q->first;
+
+    if (n == 0) {
+        q->first = q->first->next;
+        free(n_aux);
+    } else {
+        for (unsigned int i = 0; i < n - 1; i++) {
+            n_aux = n_aux->next;
+        }
+        struct s_node *to_remove = n_aux->next;
+        n_aux->next = to_remove->next;
+        free(to_remove);
+    }
+    
+    q->size--;
+    assert(invrep(q));
+    return q;
+}
+
 void queue_dump(queue q, FILE *file) {
-    file = file==NULL ? stdout: file;
-    struct s_node *node=q->first;
-    fprintf(file, "[ ");
-    while(node!=NULL) {
+    file = (file == NULL) ? stdout: file;
+    struct s_node *node = q->first;
+    fprintf(file, "[");
+    while(node != NULL) {
         fprintf(file, "%d", node->elem);
         node = node->next;
         if (node != NULL) {
-            fprintf(file, ", ");
+            fprintf(file, ",");
         }
     }
     fprintf(file, "]\n");
@@ -115,7 +124,7 @@ queue queue_destroy(queue q) {
     assert(invrep(q));
     struct s_node *node=q->first;
     while (node != NULL) {
-        struct s_node *killme=node;
+        struct s_node *killme = node;
         node = node->next;
         killme = destroy_node(killme);
     }

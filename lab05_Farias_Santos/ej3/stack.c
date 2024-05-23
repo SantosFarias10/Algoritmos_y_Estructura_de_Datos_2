@@ -95,7 +95,7 @@ stack_elem *stack_to_array(stack s){
 
 stack stack_destroy(stack s){
     free(s->elems); /*liberamos la memoria del arreglo de elementos*/
-    free(s); /*liberamos la memoria de la pila*/
+    free(s); /*liberamos la memoria de la*/
     
     return NULL;
 }

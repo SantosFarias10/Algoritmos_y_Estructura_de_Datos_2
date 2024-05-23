@@ -124,3 +124,31 @@ queue queue_destroy(queue q) {
     assert(q == NULL);
     return q;
 }
+
+/*
+ * Elimina el n-esimo elemento
+ * queue_disscard(q, 0) equivalente a queue_dequeue(q).
+*/
+queue queue_disscard(queue q, unsigned int n){
+    assert((invrep(q)) && (n < queue_size(q))); /*q --> queue && n < queue_size(q)*/
+
+    struct s_node *aux = q->first;
+
+    if (n == 0){
+        q->first = q->first->next;
+        free(aux);
+    } else {
+        for (unsigned int i = 0; i < n; i++){
+            aux = aux->next;
+        }
+        struct s_node *remove = aux->next;
+        aux->next = remove->next;
+        free(remove);
+    }
+    
+    q->tam = q->tam - 1;
+
+    assert(invrep(q)); /*q --> queue*/
+
+    return q;
+}

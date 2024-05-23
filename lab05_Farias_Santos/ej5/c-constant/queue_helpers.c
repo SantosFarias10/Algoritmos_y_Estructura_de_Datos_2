@@ -52,6 +52,3 @@ queue queue_user_disscard(queue q) {
     }
     return res==1 ? q: NULL;
 }
-
-
-
