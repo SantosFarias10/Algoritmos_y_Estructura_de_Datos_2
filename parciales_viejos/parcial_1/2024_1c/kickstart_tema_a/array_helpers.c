@@ -28,20 +28,7 @@ void array_dump(CharacterList array) {
 }
 
 float array_alive_mean_life(CharacterList array) {
-  float prom_vida = 0.0;
-  int personaje = 0;
-  for (unsigned int i = 0u; i < CHARACTER_TYPES; i++){
-    for (unsigned int j = 0; j < CHARACTER_ALIGNMENTS; j++){
-      if (array[i][j].life){
-        prom_vida += array[i][j].life;
-        personaje++;
-      }
-    } 
-  }
-
-  prom_vida = prom_vida / personaje;
-
-  return prom_vida;
+    /* COMPLETAR */
 }
 
 unsigned int array_from_file(CharacterList array, const char *filepath) {
@@ -56,12 +43,12 @@ unsigned int array_from_file(CharacterList array, const char *filepath) {
 
   // read the file
   unsigned int readed = 0;
-  while (!feof(file)) { /*feof toma FILE *stream e indica si se ha establecido el distintivo de fin de archivo para la ruta de proporcionada. El distintivo de fin de archivo lo establecen varias funciones para indicar el final del archivo*/
+  while (/* COMPLETAR */) {
     charttype_t charttype;
     alignment_t alignment;
 
     char s_charttype, s_alignment;
-    int res=fscanf(file, "[%c %c] ", &s_charttype, &s_alignment);
+    int res=fscanf(file, /* COMPLETAR */ , &s_charttype, &s_alignment);
     if (res != 2) {
         fprintf(stderr, "Error reading type and alignment.\n");
         exit(EXIT_FAILURE);
@@ -76,19 +63,6 @@ unsigned int array_from_file(CharacterList array, const char *filepath) {
      *
      */
 
-   if (s_charttype == 'a') {
-      charttype = agile;
-    } else if (s_charttype == 'p') {
-      charttype = physical;
-    } else if (s_charttype == 't') {
-      charttype = tank;
-    } else if (s_charttype == 'm') {
-      charttype = magic;
-    } else {
-      fprintf(stderr, "Invalid Character Type.\n");
-      exit(EXIT_FAILURE);
-    }
-
     /* convertir la letra de `s_alignment` en un valor `aligment_t` y asignarlo
      * a la variable  `alignment`:
      *
@@ -97,31 +71,15 @@ unsigned int array_from_file(CharacterList array, const char *filepath) {
      *
      */
 
-    if (s_alignment == 'g') {
-      alignment = good;
-    } else if (s_alignment == 'e') {
-      alignment = evil;
-    } else {
-      fprintf(stderr, "Invalid Character Alignment.\n");
-      exit(EXIT_FAILURE);
-    }
-
     // Reads the name and obtains an name_t value
     name_t name = read_character_name(file);
 
-    Character character = character_from_file_line(file, name, alignment); /*creamos un personaje*/
+    Character character = /*completar cargando el contenido del archivo*/;
 
     /* COMPLETAR: Almacenar en la tabla*/
-    array[charttype][alignment] = character;
-
     ++readed;
   }
   /* COMPLETAR SI ES NECESARIO CON ALGUNA VERIFICACIÓN FINAL */
-
-  if (readed != 8) {  /*porqie read != 8???????*/
-    fprintf(stderr, "Invalid Number of Records.\n");
-    exit(EXIT_FAILURE);
-  }
 
   // close the file
   fclose(file);

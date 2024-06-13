@@ -28,44 +28,18 @@ Character character_from_file_line(FILE *file, name_t name, alignment_t alignmen
   unsigned int life;
   unsigned int strength;
   unsigned int agility;
-
-  int res = fscanf(file, EXPECTED_ATTRIBUTE_FORMAT, &life, &strength, &agility);  /*Toma un FILE *stream (el archivo a leer), un const *format-string (el formato que debe cumplir), y argument-list (losr argumentos del formato [life: %u,...])*/
-  if (res != AMOUNT_OF_ATTRIBUTES)  /*si no toma exactamente la cantidad de argumentos (3)*/
-  {
-    fprintf(stderr, "Invalid Attributes formats.\n"); /*mensaje de error*/
-    exit(EXIT_FAILURE);
-  }
-  
-  if (life > 100) { /*si life no esta en el intervalo dado*/
-    fprintf(stderr, "Invalid Life Value.\n"); /*mensaje de error*/
-    exit(EXIT_FAILURE);
-  }  
-  
-  if (strength > 10 || strength < 1) {  /*si la fuerza es no esta en el intervalo dado*/
-    fprintf(stderr, "Invalid Stength Value.\n");  /*mensaje de error*/
-    exit(EXIT_FAILURE);
-  }
-
-  if (agility > 10 || agility < 1) {  /*si agilidad no esta en el intervalo dado*/
-    fprintf(stderr, "Invalid Agility Value.\n");  /*mensaje de error*/
-    exit(EXIT_FAILURE);
-  }
-
+  /*
+   * COMPLETAR
+   *
+   */
   Character character;
 
-  if (life > 0) { /*el bool alive*/
-    character.alive = true;
-  } else {
-    character.alive = false;
-  }
-
-  character.name = name;  /*creamos el personaje*/
+  character.name = name;
   character.alignment = alignment;
-  character.life = life;
-  character.strength = strength;
-  character.agility = agility;
-
-  return character;
+  /*
+   * COMPLETAR
+   *
+   */
 }
 
 name_t read_character_name(FILE *file) {
