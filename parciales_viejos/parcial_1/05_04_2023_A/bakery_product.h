@@ -5,9 +5,9 @@
 
 #ifndef _BAKERY_PRODUCT_H
 #define _BAKERY_PRODUCT_H
-#define EXPECTED_PRODUCT_FILE_FORMAT " (%u,%u) (%u,%u) (%u,%u) %u\n"
-
-typedef enum {
+#define EXPECTED_PRODUCT_FILE_FORMAT "(%u,%u) (%u,%u) (%u,%u) %u\n"
+typedef enum
+{
     low,
     high
 } season_t;
@@ -15,7 +15,8 @@ typedef enum {
 #include <stdio.h>
 
 /** @brief Type used to represent bakery product data.*/
-typedef struct _product {
+typedef struct _product
+{
     unsigned int flour_cant;
     unsigned int flour_price;
     unsigned int yeast_cant;

@@ -63,7 +63,8 @@ char *parse_filepath(int argc, char *argv[])
  *
  * @return EXIT_SUCCESS when programs executes correctly, EXIT_FAILURE otherwise
  */
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     char *filepath = NULL;
 
     /* parse the filepath given in command line arguments */
@@ -77,12 +78,5 @@ int main(int argc, char *argv[]) {
 
     /* show the data on the screen */
     array_dump(array);
-
-    /* Calculamos el mayor profit */
-    unsigned int max_profit = best_profit(array);
-
-    /* Imprimimos cual fue el mayor profit */
-    printf("La Mayor Ganancia fue %u\n",max_profit);
-
     return (EXIT_SUCCESS);
 }

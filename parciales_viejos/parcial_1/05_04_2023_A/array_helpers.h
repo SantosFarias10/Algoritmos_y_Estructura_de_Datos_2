@@ -2,7 +2,6 @@
   @file array_helpers.h
   @brief defines array helpers methods. These methods operates over multidimensional array of prices
 */
-
 #ifndef _ARRAY_HELPERS_H
 #define _ARRAY_HELPERS_H
 #include <stdbool.h>
